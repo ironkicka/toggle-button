@@ -1,21 +1,67 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React ,{Component} from 'react';
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TouchableHighlight,
+    } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const heartIcon = require('./images/heart.png')
+
+
+export default class App extends React.Component {
+    state = {
+        liked: false,
+    }
+
+    handleButtonPress = () =>{
+        this.setState({
+            liked: !this.state.liked,
+        })
+    }
+
+    render(){
+        //Defined in a later step
+        const likedStyles = this.state.liked ? styles.liked : undefined;
+        return(
+        <View style={styles.container}>
+            <TouchableHighlight
+                onPress={this.handleButtonPress}
+                style={styles.button}
+                underlayColor="#fefefe"
+            >
+                <Image
+                    source={heartIcon}
+                    style={[styles.icon,likedStyles]}
+                />
+            </TouchableHighlight>
+            <Text style={styles.text}>
+                Do you like this app ?
+            </Text>
+        </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+        marginTop:50,
+    },
+    button:{
+        borderRadius:5,
+        padding:10,
+    },
+    icon:{
+        width:180,
+        height:180,
+        tintColor:'#f1f1f1',
+    },
+    liked:{
+        tintColor:'#e74c3c'
+    },
+    text:{
+        marginTop:20,
+    }
 });
